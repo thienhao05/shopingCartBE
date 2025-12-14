@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Request, Response } from 'express'
 
 export const loginController = (req: Request, res: Response) => {
@@ -13,6 +14,8 @@ export const loginController = (req: Request, res: Response) => {
   return res.status(200).json({
     message: 'Login successfull'
 =======
+=======
+>>>>>>> fixJwtTokenStrong
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import { LoginReqBody, LogoutReqBody, RegisterReqBody, TokenPayLoad } from '~/models/request/User.requests'
@@ -91,6 +94,9 @@ export const logoutController = async (
 
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.LOGOUT_SUCCESS
+<<<<<<< HEAD
 >>>>>>> users/logout
+=======
+>>>>>>> fixJwtTokenStrong
   })
 }
