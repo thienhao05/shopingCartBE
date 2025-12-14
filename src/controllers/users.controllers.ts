@@ -8,7 +8,7 @@ export const loginController = (req: Request, res: Response) => {
       message: 'Unauthenticated'
     })
   }
-  // dong goi response
+  // dong goi response nha
   return res.status(200).json({
     message: 'Login successfull'
   })
