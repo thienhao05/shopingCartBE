@@ -1,0 +1,19 @@
+import jwt from 'jsonwebtoken'
+export const signToken = ({
+  payload,
+  privateKey = process.env.JWT_SECRET,
+  options = { algorithm: 'HS256' }
+}: {
+  payload: any //
+  privateKey?: string
+  options?: jwt.SignOptions
+}) => {
+  return new Promise<string>((resolve, reject) => {
+    jwt.sign(payload, privateKey as string, options, function (err, token) {
+      if (err) throw reject(err)
+      else resolve(token as string)
+    })
+  })
+}
+
+// jwt.sign() cách tìm kiểu dữ liệu
