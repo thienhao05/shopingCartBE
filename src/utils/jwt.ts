@@ -3,19 +3,25 @@ import { TokenPayLoad } from '~/models/request/User.requests'
 export const signToken = ({
   payload,
 <<<<<<< HEAD
+<<<<<<< HEAD
   privateKey = process.env.JWT_SECRET,
   options = { algorithm: 'HS256' }
 }: {
   payload: any //
   privateKey?: string
 =======
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   // privateKey = process.env.JWT_SECRET,
   privateKey,
   options = { algorithm: 'HS256' }
 }: {
   payload: object | string | Buffer //
   privateKey: string // bỏ ? để ép truyền vào
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   options?: jwt.SignOptions
 }) => {
   return new Promise<string>((resolve, reject) => {
@@ -31,17 +37,23 @@ export const signToken = ({
 export const verifyToken = ({
   token, //
 <<<<<<< HEAD
+<<<<<<< HEAD
   privateKey = process.env.JWT_SECRET as string
 }: {
   token: string
   privateKey?: string
 =======
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   // privateKey = process.env.JWT_SECRET as string
   privateKey
 }: {
   token: string
   privateKey: string //bỏ ? để ép truyền vào
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 }) => {
   //decoded chính là cái payload của mình nha
   //decoded chính là cái payload của mình đc mã hóa

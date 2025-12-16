@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Request, Response } from 'express'
 
 export const loginController = (req: Request, res: Response) => {
@@ -19,11 +20,27 @@ export const loginController = (req: Request, res: Response) => {
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import { LoginReqBody, LogoutReqBody, RegisterReqBody, TokenPayLoad } from '~/models/request/User.requests'
+=======
+import { NextFunction, Request, Response } from 'express'
+import { validationResult } from 'express-validator'
+import {
+  EmailVerifyReqQuery,
+  ForgotPasswordReqBody,
+  LoginReqBody,
+  LogoutReqBody,
+  RegisterReqBody,
+  TokenPayLoad
+} from '~/models/request/User.requests'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 import { ParamsDictionary } from 'express-serve-static-core'
 import usersServices from '~/services/users.services'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
+<<<<<<< HEAD
+=======
+import { UserVerifyStatus } from '~/constants/enums'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, LoginReqBody>, //
@@ -95,8 +112,81 @@ export const logoutController = async (
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.LOGOUT_SUCCESS
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+  })
+}
+
+export const emailVerifyController = async (
+  req: Request<ParamsDictionary, any, any, EmailVerifyReqQuery>, //
+  res: Response
+) => {
+  const { email_verify_token } = req.query
+  const { user_id } = req.decoded_email_verify_token as TokenPayLoad
+  //kiểm tra email_verify_token có thật sự thuộc sở hữu của user đó không ?
+  await usersServices.checkEmailVerifyToken({
+    user_id,
+    email_verify_token
+  }) //nếu có lỗi thì hàm trên sẽ ném lỗi, còn k thì thôi
+  //verify email: xóa email_verify_token và đổi verify: từ 0 thành 1
+  await usersServices.verifyEmail(user_id)
+  //gửi response
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.EMAIL_VERIFY_SUCCESS
+  })
+}
+
+export const resendVerifyEmailController = async (req: Request, res: Response) => {
+  //0. lấy user_id từ decoded_access_token vì mình có verify access_token trước đó ở
+  //    middleware rồi
+  const { user_id } = req.decoded_authorization as TokenPayLoad
+  //1. Tìm thông tin user xem trạng thái verify của nó thế nào
+  const verifyStatus = await usersServices.getVerifyStatus(user_id)
+  //nếu đã verify th2i thông báo là không cần gửi lại
+  if (verifyStatus == UserVerifyStatus.Verified) {
+    return res.status(HTTP_STATUS.OK).json({
+      message: USERS_MESSAGES.EMAIL_ALREADY_VERIFIED_BEFORE
+    })
+  }
+  //nếu bị banned thì không gửi
+  if (verifyStatus == UserVerifyStatus.Banned) {
+    return res.status(HTTP_STATUS.OK).json({
+      message: USERS_MESSAGES.ACCOUNT_HAS_BEEN_BANNED
+    })
+  }
+  //nếu chưa verify thì gửi lại
+  if (verifyStatus == UserVerifyStatus.Unverified) {
+    //resendVerifyEmail: tạo email_verify_token mối, cập nhật lại user và gửi email
+    await usersServices.resendVerifyEmail(user_id)
+    return res.status(HTTP_STATUS.OK).json({
+      message: USERS_MESSAGES.RESEND_VERIFY_EMAIL_SUCCESS
+    })
+  }
+}
+
+export const forgotPasswordController = async (
+  req: Request<ParamsDictionary, any, ForgotPasswordReqBody>, //
+  res: Response
+) => {
+  //dựa vào email kiểm tra xem user này có tồn tại không
+  //email này có tồn tại trong hệ thống không ?
+  const { email } = req.body
+  const isExisted = await usersServices.checkEmailExist(email)
+  if (!isExisted) {
+    //nhớ có ! nha "Nếu email k tồn tại thì sao mà lấy lại mật khẩu"
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.UNAUTHORIZED, //401
+      message: USERS_MESSAGES.USER_NOT_FOUND
+    })
+  }
+  //nếu có tồn tại thì mình sẽ tạo forgot_password_token và lưu vào user
+  //đồng thời gửi link forgot_password_token cho người dùng qua email
+  await usersServices.forgotPassword(email)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.CHECK_YOUR_EMAIL
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   })
 }

@@ -4,6 +4,7 @@
   "ignore": [],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "exec": "npx ts-node ./src/index.ts"
 =======
   "exec": "npx ts-node -T ./src/index.ts"
@@ -11,4 +12,7 @@
 =======
   "exec": "npx ts-node -T ./src/index.ts"
 >>>>>>> fixJwtTokenStrong
+=======
+  "exec": "npx ts-node -T ./src/index.ts"
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 }

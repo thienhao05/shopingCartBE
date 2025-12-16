@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export const loginValidator = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
@@ -15,6 +16,8 @@ export const loginValidator = (req: Request, res: Response, next: NextFunction) 
 =======
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 import { checkSchema } from 'express-validator'
 import { JsonWebTokenError } from 'jsonwebtoken'
 import { capitalize } from 'lodash'
@@ -22,9 +25,13 @@ import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 import { ErrorWithStatus } from '~/models/Errors'
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { TokenPayLoad } from '~/models/request/User.requests'
 >>>>>>> fixJwtTokenStrong
+=======
+import { TokenPayLoad } from '~/models/request/User.requests'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
 
@@ -183,9 +190,12 @@ export const accessTokenValidator = validate(
     {
       Authorization: {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         trim: true, //thêm
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
         notEmpty: {
           errorMessage: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
         },
@@ -204,15 +214,21 @@ export const accessTokenValidator = validate(
             //nếu có access_token
             try {
 <<<<<<< HEAD
+<<<<<<< HEAD
               const decoded_authorization = await verifyToken({ token: access_token }) //nó là 1 Promise nó chỉ là cái payload thôi
 =======
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
               //const decoded_authorization = await verifyToken({ token: access_token }) //nó là 1 Promise nó chỉ là cái payload thôi
               const decoded_authorization = (await verifyToken({
                 token: access_token,
                 privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string
               })) as TokenPayLoad
 
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
               ;(req as Request).decoded_authorization = decoded_authorization
               //cất lỗi qua tầng sau xài
             } catch (error) {
@@ -237,9 +253,12 @@ export const refreshTokenValidator = validate(
     {
       refresh_token: {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         trim: true, //thêm
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
         notEmpty: {
           errorMessage: USERS_MESSAGES.REFRESH_TOKEN_IS_REQUIRED
         },
@@ -255,14 +274,20 @@ export const refreshTokenValidator = validate(
             //nếu có refresh_token thì
             try {
 <<<<<<< HEAD
+<<<<<<< HEAD
               const decoded_refresh_token = await verifyToken({ token: value }) //nó là 1 Promise nó chỉ là cái payload thôi
 =======
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
               //const decoded_refresh_token = await verifyToken({ token: value }) //nó là 1 Promise nó chỉ là cái payload thôi
               const decoded_refresh_token = (await verifyToken({
                 token: value,
                 privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string
               })) as TokenPayLoad
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
               ;(req as Request).decoded_refresh_token = decoded_refresh_token
               //cất lỗi qua tầng sau xài
             } catch (error) {
@@ -281,6 +306,61 @@ export const refreshTokenValidator = validate(
   )
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+
+export const emailVerifyTokenValidator = validate(
+  checkSchema(
+    {
+      email_verify_token: {
+        trim: true,
+        notEmpty: {
+          errorMessage: USERS_MESSAGES.EMAIL_VERIFY_TOKEN_IS_REQUIRED
+        },
+        //nếu có thì mình phải verify: và k có hàm sẵn
+        custom: {
+          options: async (value, { req }) => {
+            //trong đó value là email_verify_token mà  mình cần kiểm tra
+            try {
+              const decoded_email_verify_token = await verifyToken({
+                token: value,
+                privateKey: process.env.JWT_SECRET_EMAIL_VERIFY_TOKEN as string
+              })
+              ;(req as Request).decoded_email_verify_token = decoded_email_verify_token
+            } catch (error) {
+              throw new ErrorWithStatus({
+                status: HTTP_STATUS.UNAUTHORIZED, //401
+                message: capitalize((error as JsonWebTokenError).message)
+              })
+            }
+            //
+            return true //passed validator
+          }
+        }
+      }
+    },
+    ['query']
+  )
+)
+
+export const forgotPasswordValidator = validate(
+  checkSchema(
+    {
+      //email
+      email: {
+        notEmpty: {
+          errorMessage: USERS_MESSAGES.EMAIL_IS_REQUIRED
+        },
+        isEmail: {
+          errorMessage: USERS_MESSAGES.EMAIL_IS_INVALID
+        },
+        trim: true
+      }
+    },
+    ['body']
+  )
+)
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword

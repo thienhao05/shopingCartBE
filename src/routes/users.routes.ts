@@ -1,6 +1,7 @@
 import express from 'express'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { loginController } from '~/controllers/users.controllers'
 import { loginValidator } from '~/middlewares/users.middlewares'
 =======
@@ -9,20 +10,38 @@ import { loginValidator } from '~/middlewares/users.middlewares'
 import { loginController, logoutController, registerController } from '~/controllers/users.controllers'
 import {
   accessTokenValidator,
+=======
+import {
+  emailVerifyController,
+  forgotPasswordController,
+  loginController,
+  logoutController,
+  registerController,
+  resendVerifyEmailController
+} from '~/controllers/users.controllers'
+import {
+  accessTokenValidator,
+  emailVerifyTokenValidator,
+  forgotPasswordValidator,
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   loginValidator,
   refreshTokenValidator,
   registerValidator
 } from '~/middlewares/users.middlewares'
 import { wrapAsync } from '~/utils/handler'
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 const usersRoutes = express.Router()
 
 /*
 path: users/login
 method: POST
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Request: headers body param query
@@ -31,6 +50,8 @@ Request: headers body param query
 =======
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 Request: headers(gửi những cái mật khẩu mà server cho mình) 
          body(những mật khẩu của mình muốn gửi lên server)
          param(méo quan trọng)
@@ -38,13 +59,17 @@ Request: headers(gửi những cái mật khẩu mà server cho mình)
     headers: do server gui cho minh minh gui lai(người ta cho mình cái mật khẩu cái mình giữ mình gửi lên lại)
     body: minh gui len server (cái gì của mình, mình gửi lên server)
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 body: {
     email: string,
     password: string
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 loginValidator: kiem tra email va password
@@ -55,6 +80,8 @@ usersRoutes.post('/login', loginValidator, loginController)
 =======
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 loginValidator: kiem tra email va password (middleware)
 loginController: dong goi kien va gui ket qua
 */
@@ -101,8 +128,56 @@ usersRoutes.post(
   wrapAsync(logoutController)
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
+=======
+
+/*verify-email
+des: người dùng vào email để bấm vào link xác thực, link này thật chất
+là gửi lại email_verify_toke lên server để server xác thực
+path: /users/verify-email/?email_verify_token=string
+method: GET (vì người dùng chỉ bấm vào link)
+query:{
+  email_verify_token: string
+}
+*/
+
+usersRoutes.get(
+  '/verify-email/', //
+  emailVerifyTokenValidator,
+  wrapAsync(emailVerifyController)
+)
+
+/*resend-verify-email
+des: người dùng muốn verify-email nhưng chưa | không có link 
+path: /users/resend-verify-email
+method: POST (cần biết người dùng là ai để gửi mail của người dùng đó)
+headers{
+  Authorization: 'Bearer access_token'
+}
+
+*/
+
+usersRoutes.post(
+  '/resend-verify-email',
+  accessTokenValidator, //hàm làm rồi không làm nữa
+  wrapAsync(resendVerifyEmailController)
+)
+
+/*forgot-password
+path: /users/forgot-password
+method: POST
+body: {
+  email: string
+}
+ */
+usersRoutes.post(
+  '/forgot-password', //,
+  forgotPasswordValidator, //kiểm tra email trong body
+  wrapAsync(forgotPasswordController)
+)
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 
 export default usersRoutes

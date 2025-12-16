@@ -4,5 +4,10 @@ declare module 'express' {
   interface Request {
     decoded_authorization?: TokenPayLoad
     decoded_refresh_token?: TokenPayLoad
+<<<<<<< HEAD
+=======
+    decoded_email_verify_token?: TokenPayLoad
+    decoded_forgot_password_token?: TokenPayLoad
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
   }
 }

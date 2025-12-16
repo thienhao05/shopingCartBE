@@ -31,5 +31,18 @@ export const USERS_MESSAGES = {
   REFRESH_TOKEN_IS_REQUIRED: 'Refresh token is required',
   ACCESS_TOKEN_IS_INVALID: 'Access token is invalid',
   REFRESH_TOKEN_IS_INVALID: 'Refresh token is invalid',
+<<<<<<< HEAD
   LOGOUT_SUCCESS: 'Logout is successful'
+=======
+  LOGOUT_SUCCESS: 'Logout is successful',
+  EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'Email verify token is required',
+  USER_NOT_FOUND: 'User not found',
+  EMAIL_ALREADY_VERIFIED_BEFORE: 'Email already verified before',
+  EMAIL_HAS_BEEN_VERIFIED: 'Email has been verified',
+  EMAIL_VERIFY_SUCCESS: 'Email verify success',
+  EMAIL_VERIFY_TOKEN_IS_INVALID: 'Email verify token is invalid',
+  ACCOUNT_HAS_BEEN_BANNED: 'Account has been banned',
+  RESEND_VERIFY_EMAIL_SUCCESS: 'Resend verify email success',
+  CHECK_YOUR_EMAIL: 'Check your email for change password'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 } as const

@@ -3,7 +3,11 @@ import databaseServices from './database.services'
 import { LoginReqBody, RegisterReqBody } from '~/models/request/User.requests'
 import { hashPassword } from '~/utils/crypto'
 import { signToken } from '~/utils/jwt'
+<<<<<<< HEAD
 import { TokenType } from '~/constants/enums'
+=======
+import { TokenType, UserVerifyStatus } from '~/constants/enums'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 import { StringValue } from 'ms'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
@@ -14,6 +18,7 @@ import { ObjectId } from 'mongodb'
 class UsersServices {
   private signAccessToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
       payload: { user_id, token_type: TokenType.AccessToken }, //0
 <<<<<<< HEAD
       options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
@@ -21,11 +26,17 @@ class UsersServices {
       options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue },
       privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string //thêm
 >>>>>>> fixJwtTokenStrong
+=======
+      privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.AccessToken }, //0
+      options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
     })
   }
 
   private signRefreshToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
       payload: { user_id, token_type: TokenType.RefreshToken }, //0
 <<<<<<< HEAD
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as StringValue }
@@ -33,25 +44,63 @@ class UsersServices {
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as StringValue },
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string //thêm
 >>>>>>> fixJwtTokenStrong
+=======
+      privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.RefreshToken }, //1
+      options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as StringValue }
+    })
+  }
+
+  private signEmailVerifyToken(user_id: string) {
+    return signToken({
+      privateKey: process.env.JWT_SECRET_EMAIL_VERIFY_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.EmailVerificationToken }, //1
+      options: { expiresIn: process.env.EMAIL_VERIFY_TOKEN_EXPIRE_IN as StringValue }
+    })
+  }
+
+  private signForgotPasswordToken(user_id: string) {
+    return signToken({
+      privateKey: process.env.JWT_SECRET_FORGOT_PASSWORD_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.ForgotPasswordToken }, //1
+      options: { expiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRE_IN as StringValue }
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
     })
   }
 
   async register(payload: RegisterReqBody) {
     //muốn đăng kí tài khoản gửi cho 1 object như này
     // const { email, password } = payload
+<<<<<<< HEAD
     const result = await databaseServices.users.insertOne(
       new User({
+=======
+    const user_id = new ObjectId()
+    const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
+    const result = await databaseServices.users.insertOne(
+      new User({
+        _id: user_id,
+        email_verify_token,
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
         ...payload,
         date_of_birth: new Date(payload.date_of_birth), //ghi đè
         password: hashPassword(payload.password) //ghi đè lại password bằng password đã đc mã hóa
       })
     )
+<<<<<<< HEAD
     //lấy id của user vừa tạo để làm ac và rf
     const user_id = result.insertedId.toString()
     //ký ac và rf
     const [access_token, refresh_token] = await Promise.all([
       this.signAccessToken(user_id),
       this.signRefreshToken(user_id)
+=======
+
+    //ký ac và rf
+    const [access_token, refresh_token] = await Promise.all([
+      this.signAccessToken(user_id.toString()),
+      this.signRefreshToken(user_id.toString())
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
     ])
     //thiếu việc lưu rf vào database
     await databaseServices.refreshTokens.insertOne(
@@ -61,6 +110,13 @@ class UsersServices {
       })
     )
     //
+<<<<<<< HEAD
+=======
+    //email_verify_token thì phải gửi qua email
+    console.log(`http://localhost:3000/users/verify-email/?email_verify_token=${email_verify_token}`)
+
+    //
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
     return {
       access_token,
       refresh_token
@@ -124,6 +180,105 @@ class UsersServices {
   async logout(refresh_token: string) {
     await databaseServices.refreshTokens.deleteOne({ token: refresh_token })
   }
+<<<<<<< HEAD
+=======
+
+  async checkEmailVerifyToken({
+    user_id, //
+    email_verify_token
+  }: {
+    user_id: string
+    email_verify_token: string
+  }) {
+    //tìm user sở hữu 2 thông tin này cùng lúc: kiểm tra xem user có đang sở hữu cái evt này k
+    const user = await databaseServices.users.findOne({
+      _id: new ObjectId(user_id), //mongo lưu là _id
+      email_verify_token
+    })
+    //nếu k tìm thấy user thì nghĩa là evt  k hợp lệ
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY, //422
+        message: USERS_MESSAGES.EMAIL_VERIFY_TOKEN_IS_INVALID
+      })
+    }
+    //nếu có thì thôi
+  }
+
+  async verifyEmail(user_id: string) {
+    //cập nhật lại user
+    await databaseServices.users.updateOne(
+      { _id: new ObjectId(user_id) }, //
+      [
+        {
+          $set: {
+            email_verify_token: '', //
+            updated_at: '$$NOW',
+            verify: UserVerifyStatus.Verified
+          }
+        }
+      ]
+    )
+  }
+
+  async getVerifyStatus(user_id: string) {
+    //tìm user thông qua user_id
+    const user = await databaseServices.users.findOne({ _id: new ObjectId(user_id) })
+    //nếu k có thì ném lỗi
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNAUTHORIZED, //401
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    //nếu có thì
+    return user.verify //chỉ return trạng thái verify, k đc return user ra controller
+    //nếu không thì bị lộ rất nhiều thông tin nhạy cảm
+  }
+
+  async resendVerifyEmail(user_id: string) {
+    //tạo email_verify_token mới
+    const email_verify_token = await this.signEmailVerifyToken(user_id)
+    //cập nhật lại user với email_verify_token mới
+    await databaseServices.users.updateOne(
+      { _id: new ObjectId(user_id) }, //
+      [
+        {
+          $set: {
+            email_verify_token, //
+            updated_at: '$$NOW'
+          }
+        }
+      ]
+    )
+    //gửi email(tao lấy console từ cái register ở trên)
+    console.log(`http://localhost:3000/users/verify-email/?email_verify_token=${email_verify_token}`)
+  }
+
+  //forgotPassword
+  async forgotPassword(email: string) {
+    //tìm user thông qua email để lấy id để kí
+    const user = await databaseServices.users.findOne({ email })
+    //
+    const user_id = user!._id.toString()
+    //tạo forgot_password_token từ user_id
+    const forgot_password_token = await this.signForgotPasswordToken(user_id)
+    //cập nhật lại user với forgot_password_token mới
+    await databaseServices.users.updateOne(
+      { _id: new ObjectId(user_id) }, //
+      [
+        {
+          $set: {
+            forgot_password_token, //
+            updated_at: '$$NOW'
+          }
+        }
+      ]
+    )
+    //tạo link
+    console.log(`http://localhost:3000/users/reset-password/?forgot_password_token=${forgot_password_token}`)
+  }
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 }
 
 const usersServices = new UsersServices()

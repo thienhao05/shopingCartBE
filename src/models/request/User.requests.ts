@@ -1,5 +1,9 @@
 import { JwtPayload } from 'jsonwebtoken'
 import { TokenType } from '~/constants/enums'
+<<<<<<< HEAD
+=======
+import { ParsedQs } from 'qs'
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 
 //định nghĩa những gì người dùng sẽ gửi lên
 export interface RegisterReqBody {
@@ -23,3 +27,14 @@ export interface TokenPayLoad extends JwtPayload {
   user_id: string
   token_type: TokenType
 }
+<<<<<<< HEAD
+=======
+
+export interface EmailVerifyReqQuery extends ParsedQs {
+  email_verify_token: string
+}
+
+export interface ForgotPasswordReqBody {
+  email: string
+}
+>>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
