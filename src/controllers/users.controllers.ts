@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Request, Response } from 'express'
 
 export const loginController = (req: Request, res: Response) => {
@@ -21,6 +22,8 @@ import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import { LoginReqBody, LogoutReqBody, RegisterReqBody, TokenPayLoad } from '~/models/request/User.requests'
 =======
+=======
+>>>>>>> reset-password/getme
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import {
@@ -29,18 +32,30 @@ import {
   LoginReqBody,
   LogoutReqBody,
   RegisterReqBody,
+<<<<<<< HEAD
   TokenPayLoad
 } from '~/models/request/User.requests'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+  ResetPasswordReqBody,
+  TokenPayLoad,
+  UpdateMeReqBody,
+  VerifyForgotPasswordTokenReqBody
+} from '~/models/request/User.requests'
+>>>>>>> reset-password/getme
 import { ParamsDictionary } from 'express-serve-static-core'
 import usersServices from '~/services/users.services'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { UserVerifyStatus } from '~/constants/enums'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+import { UserVerifyStatus } from '~/constants/enums'
+>>>>>>> reset-password/getme
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, LoginReqBody>, //
@@ -113,10 +128,13 @@ export const logoutController = async (
     message: USERS_MESSAGES.LOGOUT_SUCCESS
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
 =======
+=======
+>>>>>>> reset-password/getme
   })
 }
 
@@ -187,6 +205,89 @@ export const forgotPasswordController = async (
   await usersServices.forgotPassword(email)
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.CHECK_YOUR_EMAIL
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+  })
+}
+
+export const verifyForgotPasswordController = async (
+  req: Request<ParamsDictionary, any, VerifyForgotPasswordTokenReqBody>, //
+  res: Response
+) => {
+  //người ta đưa mã cho mình và muốn biết mã đã verify hay chưa
+  //mình đã verify có nghĩa là mã do mình tạo ra
+  //nhưng mình phải cem thử mã này là cũ hay mới trong hệ thống
+  //tức là trong database có còn mã này nữa hay không
+  //tức là user_id có còn sở hữu forgot_password_token này không
+  const { user_id } = req.decoded_forgot_password_token as TokenPayLoad
+  const { forgot_password_token } = req.body
+  await usersServices.checkForgotPasswordToken({
+    user_id,
+    forgot_password_token
+  })
+  //nếu có thông tin thì oke
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS
+  })
+}
+
+export const resetPasswordController = async (
+  req: Request<ParamsDictionary, any, ResetPasswordReqBody>, //
+  res: Response
+) => {
+  //kiểm tra xem forgot_password_token có còn khớp với user_id nữa không ?
+  const { user_id } = req.decoded_forgot_password_token as TokenPayLoad
+  const { forgot_password_token, password } = req.body
+  await usersServices.checkForgotPasswordToken({
+    user_id,
+    forgot_password_token
+  })
+  //nếu còn thì tiến hành đổi mật khẩu mới do req cung cấp
+  await usersServices.resetPassword({ user_id, password })
+  //xong thì res
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.RESET_PASSWORD_SUCCESS
+  })
+}
+
+export const getMeController = async (
+  req: Request, //
+  res: Response
+) => {
+  //dùng user_id tìm thông tin user
+  //user_id lấy từ decoded_authorization vì mình đã verify acccess_token ở middleware
+  const { user_id } = req.decoded_authorization as TokenPayLoad
+  const userInfor = await usersServices.getMe(user_id)
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.GET_ME_SUCCESS,
+    result: userInfor
+  })
+}
+
+export const updateMeController = async (
+  req: Request<ParamsDictionary, any, UpdateMeReqBody>, //
+  res: Response
+) => {
+  //chức năng update này tôi muốn chỉ khi user đã verify thì tui mới cho
+  const { user_id } = req.decoded_authorization as TokenPayLoad
+  const verifyStatus = await usersServices.getVerifyStatus(user_id)
+  //chưa verify thì ko cho update
+  if (verifyStatus != UserVerifyStatus.Verified) {
+    throw new ErrorWithStatus({
+      status: HTTP_STATUS.UNPROCESSABLE_ENTITY, //422
+      message: USERS_MESSAGES.USER_NOT_VERIFIED
+    })
+  }
+  //nếu verify thì tiến hành update
+  const userInfor = await usersServices.updateMe({
+    user_id,
+    payload: req.body //payload là nội dung cần update
+  })
+  //update thành công thì gửi thông tin user đã update
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.UPDATE_PROFILE_SUCCESS,
+    result: userInfor
+>>>>>>> reset-password/getme
   })
 }

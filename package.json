@@ -20,6 +20,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.21",
@@ -32,6 +33,10 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.21",
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/lodash": "^4.17.21",
+>>>>>>> reset-password/getme
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
@@ -41,6 +46,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "lodash": "^4.17.21",
 >>>>>>> users/logout
@@ -50,6 +56,9 @@
 =======
     "lodash": "^4.17.21",
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+    "lodash": "^4.17.21",
+>>>>>>> reset-password/getme
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.2",
@@ -62,12 +71,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "express": "^5.1.0"
 =======
 =======
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
     "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
@@ -77,10 +89,13 @@
     "ms": "^2.1.3"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
   }
 }

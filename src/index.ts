@@ -2,6 +2,7 @@ import express from 'express'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const app = express() // dung server len
 import usersRoutes from './routes/users.routes'
 const PORT = 3000 // tieu chuan cho back 8000 cho front
@@ -14,6 +15,8 @@ app.use('/users', usersRoutes)
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
 import usersRoutes from './routes/users.routes'
 import databaseServices from './services/database.services'
 import { defaultErrorHandler } from './middlewares/error.middlewares'
@@ -32,11 +35,14 @@ app.use(defaultErrorHandler)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
 //cho app mo PORT
 app.listen(PORT, () => {
   console.log(`Project nay dang chay tren localhost:${PORT}`)

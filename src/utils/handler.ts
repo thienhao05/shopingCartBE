@@ -3,6 +3,7 @@ import { NextFunction, Request, RequestHandler, Response } from 'express'
 // thành hàm có cấu trúc try catch + next
 //RequestHandler: (req, res, next) => {}
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const wrapAsync = (func: RequestHandler) => {
   return async (req: Request, res: Response, next: NextFunction) => {
 =======
@@ -10,6 +11,11 @@ export const wrapAsync = (func: RequestHandler) => {
 export const wrapAsync = <P, T>(func: RequestHandler<P, any, any, T>) => {
   return async (req: Request<P, any, any, T>, res: Response, next: NextFunction) => {
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+//generic
+export const wrapAsync = <P, T>(func: RequestHandler<P, any, any, T>) => {
+  return async (req: Request<P, any, any, T>, res: Response, next: NextFunction) => {
+>>>>>>> reset-password/getme
     try {
       await func(req, res, next)
     } catch (error) {

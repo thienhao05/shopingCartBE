@@ -1,5 +1,6 @@
 import User from '~/models/User.schema'
 import databaseServices from './database.services'
+<<<<<<< HEAD
 import { LoginReqBody, RegisterReqBody } from '~/models/request/User.requests'
 import { hashPassword } from '~/utils/crypto'
 import { signToken } from '~/utils/jwt'
@@ -8,6 +9,12 @@ import { TokenType } from '~/constants/enums'
 =======
 import { TokenType, UserVerifyStatus } from '~/constants/enums'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from '~/models/request/User.requests'
+import { hashPassword } from '~/utils/crypto'
+import { signToken } from '~/utils/jwt'
+import { TokenType, UserVerifyStatus } from '~/constants/enums'
+>>>>>>> reset-password/getme
 import { StringValue } from 'ms'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
@@ -18,6 +25,7 @@ import { ObjectId } from 'mongodb'
 class UsersServices {
   private signAccessToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
 <<<<<<< HEAD
       payload: { user_id, token_type: TokenType.AccessToken }, //0
 <<<<<<< HEAD
@@ -31,11 +39,17 @@ class UsersServices {
       payload: { user_id, token_type: TokenType.AccessToken }, //0
       options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+      privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.AccessToken }, //0
+      options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
+>>>>>>> reset-password/getme
     })
   }
 
   private signRefreshToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
 <<<<<<< HEAD
       payload: { user_id, token_type: TokenType.RefreshToken }, //0
 <<<<<<< HEAD
@@ -45,6 +59,8 @@ class UsersServices {
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string //thêm
 >>>>>>> fixJwtTokenStrong
 =======
+=======
+>>>>>>> reset-password/getme
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string, //thêm
       payload: { user_id, token_type: TokenType.RefreshToken }, //1
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as StringValue }
@@ -64,7 +80,10 @@ class UsersServices {
       privateKey: process.env.JWT_SECRET_FORGOT_PASSWORD_TOKEN as string, //thêm
       payload: { user_id, token_type: TokenType.ForgotPasswordToken }, //1
       options: { expiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRE_IN as StringValue }
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
     })
   }
 
@@ -72,21 +91,28 @@ class UsersServices {
     //muốn đăng kí tài khoản gửi cho 1 object như này
     // const { email, password } = payload
 <<<<<<< HEAD
+<<<<<<< HEAD
     const result = await databaseServices.users.insertOne(
       new User({
 =======
+=======
+>>>>>>> reset-password/getme
     const user_id = new ObjectId()
     const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
     const result = await databaseServices.users.insertOne(
       new User({
         _id: user_id,
         email_verify_token,
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
         ...payload,
         date_of_birth: new Date(payload.date_of_birth), //ghi đè
         password: hashPassword(payload.password) //ghi đè lại password bằng password đã đc mã hóa
       })
     )
+<<<<<<< HEAD
 <<<<<<< HEAD
     //lấy id của user vừa tạo để làm ac và rf
     const user_id = result.insertedId.toString()
@@ -95,12 +121,17 @@ class UsersServices {
       this.signAccessToken(user_id),
       this.signRefreshToken(user_id)
 =======
+=======
+>>>>>>> reset-password/getme
 
     //ký ac và rf
     const [access_token, refresh_token] = await Promise.all([
       this.signAccessToken(user_id.toString()),
       this.signRefreshToken(user_id.toString())
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
     ])
     //thiếu việc lưu rf vào database
     await databaseServices.refreshTokens.insertOne(
@@ -111,12 +142,18 @@ class UsersServices {
     )
     //
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> reset-password/getme
     //email_verify_token thì phải gửi qua email
     console.log(`http://localhost:3000/users/verify-email/?email_verify_token=${email_verify_token}`)
 
     //
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+>>>>>>> reset-password/getme
     return {
       access_token,
       refresh_token
@@ -181,7 +218,10 @@ class UsersServices {
     await databaseServices.refreshTokens.deleteOne({ token: refresh_token })
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> reset-password/getme
 
   async checkEmailVerifyToken({
     user_id, //
@@ -276,9 +316,115 @@ class UsersServices {
       ]
     )
     //tạo link
+<<<<<<< HEAD
     console.log(`http://localhost:3000/users/reset-password/?forgot_password_token=${forgot_password_token}`)
   }
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
+=======
+    console.log(`http://localhost:8000/users/reset-password/?forgot_password_token=${forgot_password_token}`)
+  }
+
+  async checkForgotPasswordToken({
+    user_id, //
+    forgot_password_token
+  }: {
+    user_id: string
+    forgot_password_token: string
+  }) {
+    //dựa vào 2 thôn tin trên tìm user nếu k có nghĩa là mã forgot_password_toke
+    //k hợp lệ, k còn trong hệ thống nữa
+    const user = await databaseServices.users.findOne({
+      _id: new ObjectId(user_id),
+      forgot_password_token
+    })
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNAUTHORIZED, //401
+        message: USERS_MESSAGES.FORGOT_PASSWORD_TOKEN_IS_INVALID
+      })
+    }
+    //còn có thì thôi, k nói gì cả
+  }
+
+  async resetPassword({ user_id, password }: { user_id: string; password: string }) {
+    //tìm và cập nhật lại password
+    await databaseServices.users.updateOne(
+      { _id: new ObjectId(user_id) }, //filter
+      [
+        {
+          $set: {
+            forgot_password_token: '',
+            password: hashPassword(password),
+            updated_at: '$$NOW'
+          }
+        }
+      ]
+    )
+  }
+
+  async getMe(user_id: string) {
+    const user = await databaseServices.users.findOne(
+      {
+        _id: new ObjectId(user_id)
+      }, //
+      {
+        projection: {
+          password: 0,
+          email_verify_token: 0,
+          forgot_password_token: 0
+        }
+      }
+    )
+    //
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.NOT_FOUND,
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    //
+    return user
+  }
+
+  async updateMe({ user_id, payload }: { user_id: string; payload: UpdateMeReqBody }) {
+    //payload có 2 thứ cần fix là date_of_birth và username
+    const _payload = payload.date_of_birth //
+      ? { ...payload, date_of_birth: new Date(payload.date_of_birth) }
+      : payload
+    //nếu có muốn cập nhật username
+    if (_payload.username) {
+      const user = await databaseServices.users.findOne({ username: _payload.username })
+      //nếu có người dùng cái username rồi thì báo lỗi
+      if (user) {
+        throw new ErrorWithStatus({
+          status: HTTP_STATUS.UNPROCESSABLE_ENTITY,
+          message: USERS_MESSAGES.USERNAME_ALREADY_EXISTS
+        })
+      }
+    }
+    //tiến hành cập nhật
+    const userInfor = await databaseServices.users.findOneAndUpdate(
+      { _id: new ObjectId(user_id) }, //filter
+      [
+        {
+          $set: {
+            ...payload,
+            updated_at: '$$NOW'
+          }
+        }
+      ],
+      {
+        returnDocument: 'after',
+        projection: {
+          password: 0,
+          email_verify_token: 0,
+          forgot_password_token: 0
+        }
+      }
+    )
+    return userInfor
+  }
+>>>>>>> reset-password/getme
 }
 
 const usersServices = new UsersServices()
