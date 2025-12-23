@@ -2,12 +2,16 @@ import { JwtPayload } from 'jsonwebtoken'
 import { TokenType } from '~/constants/enums'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { ParsedQs } from 'qs'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 import { ParsedQs } from 'qs'
 >>>>>>> reset-password/getme
+=======
+import { ParsedQs } from 'qs'
+>>>>>>> uploadfile-refresh_token
 
 //định nghĩa những gì người dùng sẽ gửi lên
 export interface RegisterReqBody {
@@ -33,9 +37,12 @@ export interface TokenPayLoad extends JwtPayload {
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 
 export interface EmailVerifyReqQuery extends ParsedQs {
   email_verify_token: string
@@ -45,8 +52,11 @@ export interface ForgotPasswordReqBody {
   email: string
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
 
 export interface VerifyForgotPasswordTokenReqBody {
   forgot_password_token: string
@@ -68,4 +78,17 @@ export interface UpdateMeReqBody {
   avatar?: string // optional
   cover_photo?: string // optional
 }
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+
+export interface ChangePasswordReqBody {
+  old_password: string
+  password: string
+  confirm_password: string
+}
+
+export interface RefreshTokenReqBody {
+  refresh_token: string
+}
+>>>>>>> uploadfile-refresh_token

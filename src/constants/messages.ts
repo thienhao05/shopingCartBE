@@ -33,10 +33,13 @@ export const USERS_MESSAGES = {
   REFRESH_TOKEN_IS_INVALID: 'Refresh token is invalid',
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   LOGOUT_SUCCESS: 'Logout is successful'
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
   LOGOUT_SUCCESS: 'Logout is successful',
   EMAIL_VERIFY_TOKEN_IS_REQUIRED: 'Email verify token is required',
   USER_NOT_FOUND: 'User not found',
@@ -47,9 +50,12 @@ export const USERS_MESSAGES = {
   ACCOUNT_HAS_BEEN_BANNED: 'Account has been banned',
   RESEND_VERIFY_EMAIL_SUCCESS: 'Resend verify email success',
 <<<<<<< HEAD
+<<<<<<< HEAD
   CHECK_YOUR_EMAIL: 'Check your email for change password'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
   CHECK_YOUR_EMAIL: 'Check your email for change password',
   FORGOT_PASSWORD_TOKEN_IS_REQUIRED: 'Forgot password token is required',
   FORGOT_PASSWORD_TOKEN_NOT_MATCH: 'Forgot password token not match',
@@ -70,6 +76,13 @@ export const USERS_MESSAGES = {
   UPDATE_PROFILE_SUCCESS: 'Update profile success',
   USER_NOT_VERIFIED: 'User not verified',
   USERNAME_ALREADY_EXISTS: 'Username already exists',
+<<<<<<< HEAD
   USERNAME_IS_INVALID: 'Username is invalid'
 >>>>>>> reset-password/getme
+=======
+  USERNAME_IS_INVALID: 'Username is invalid',
+  CHANGE_PASSWORD_SUCCESS: 'Change password success',
+  REFRESH_TOKEN_SUCCESS: 'Refresh token sucess',
+  UPLOAD_IMAGE_SUCCESS: 'Upload image success'
+>>>>>>> uploadfile-refresh_token
 } as const

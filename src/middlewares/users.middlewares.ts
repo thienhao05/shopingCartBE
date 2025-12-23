@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from 'express'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export const loginValidator = (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
@@ -23,11 +24,15 @@ import { checkSchema } from 'express-validator'
 =======
 import { checkSchema, ParamSchema } from 'express-validator'
 >>>>>>> reset-password/getme
+=======
+import { checkSchema, ParamSchema } from 'express-validator'
+>>>>>>> uploadfile-refresh_token
 import { JsonWebTokenError } from 'jsonwebtoken'
 import { capitalize } from 'lodash'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 import { ErrorWithStatus } from '~/models/Errors'
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -41,6 +46,8 @@ import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
 
 =======
+=======
+>>>>>>> uploadfile-refresh_token
 import { TokenPayLoad } from '~/models/request/User.requests'
 import { verifyToken } from '~/utils/jwt'
 import { validate } from '~/utils/validation'
@@ -149,7 +156,10 @@ const imageSchema: ParamSchema = {
   }
 }
 
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 export const loginValidator = validate(
   checkSchema(
     {
@@ -162,6 +172,7 @@ export const loginValidator = validate(
         },
         trim: true
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       password: {
         notEmpty: {
@@ -194,6 +205,9 @@ export const loginValidator = validate(
 =======
       password: passwordSchema
 >>>>>>> reset-password/getme
+=======
+      password: passwordSchema
+>>>>>>> uploadfile-refresh_token
     },
     ['body']
   )
@@ -203,6 +217,7 @@ export const loginValidator = validate(
 export const registerValidator = validate(
   checkSchema(
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
       name: {
         notEmpty: {
@@ -223,6 +238,9 @@ export const registerValidator = validate(
 =======
       name: nameSchema,
 >>>>>>> reset-password/getme
+=======
+      name: nameSchema,
+>>>>>>> uploadfile-refresh_token
       email: {
         notEmpty: {
           errorMessage: USERS_MESSAGES.EMAIL_IS_REQUIRED
@@ -232,6 +250,7 @@ export const registerValidator = validate(
         },
         trim: true
       },
+<<<<<<< HEAD
 <<<<<<< HEAD
       password: {
         notEmpty: {
@@ -308,6 +327,11 @@ export const registerValidator = validate(
       confirm_password: confirmPasswordSchema,
       date_of_birth: dateOfBirthSchema
 >>>>>>> reset-password/getme
+=======
+      password: passwordSchema,
+      confirm_password: confirmPasswordSchema,
+      date_of_birth: dateOfBirthSchema
+>>>>>>> uploadfile-refresh_token
     },
     ['body']
   )
@@ -321,6 +345,7 @@ export const accessTokenValidator = validate(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         trim: true, //thêm
 >>>>>>> fixJwtTokenStrong
@@ -328,6 +353,8 @@ export const accessTokenValidator = validate(
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
         notEmpty: {
           errorMessage: USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED
         },
@@ -348,12 +375,15 @@ export const accessTokenValidator = validate(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               const decoded_authorization = await verifyToken({ token: access_token }) //nó là 1 Promise nó chỉ là cái payload thôi
 =======
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
               //const decoded_authorization = await verifyToken({ token: access_token }) //nó là 1 Promise nó chỉ là cái payload thôi
               const decoded_authorization = (await verifyToken({
                 token: access_token,
@@ -362,11 +392,14 @@ export const accessTokenValidator = validate(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
               ;(req as Request).decoded_authorization = decoded_authorization
               //cất lỗi qua tầng sau xài
             } catch (error) {
@@ -393,6 +426,7 @@ export const refreshTokenValidator = validate(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         trim: true, //thêm
 >>>>>>> fixJwtTokenStrong
@@ -400,6 +434,8 @@ export const refreshTokenValidator = validate(
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
         notEmpty: {
           errorMessage: USERS_MESSAGES.REFRESH_TOKEN_IS_REQUIRED
         },
@@ -417,12 +453,15 @@ export const refreshTokenValidator = validate(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
               const decoded_refresh_token = await verifyToken({ token: value }) //nó là 1 Promise nó chỉ là cái payload thôi
 =======
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
               //const decoded_refresh_token = await verifyToken({ token: value }) //nó là 1 Promise nó chỉ là cái payload thôi
               const decoded_refresh_token = (await verifyToken({
                 token: value,
@@ -430,11 +469,14 @@ export const refreshTokenValidator = validate(
               })) as TokenPayLoad
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
               ;(req as Request).decoded_refresh_token = decoded_refresh_token
               //cất lỗi qua tầng sau xài
             } catch (error) {
@@ -455,12 +497,15 @@ export const refreshTokenValidator = validate(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 
 export const emailVerifyTokenValidator = validate(
   checkSchema(
@@ -514,8 +559,11 @@ export const forgotPasswordValidator = validate(
   )
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
 
 export const forgotPasswordTokenValidator = validate(
   checkSchema(
@@ -640,4 +688,18 @@ export const updateMeValidator = validate(
     ['body']
   )
 )
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+
+export const changePasswordValidator = validate(
+  checkSchema(
+    {
+      old_password: passwordSchema,
+      password: passwordSchema,
+      confirm_password: confirmPasswordSchema
+    },
+    ['body']
+  )
+)
+>>>>>>> uploadfile-refresh_token

@@ -5,6 +5,7 @@ export const signToken = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   privateKey = process.env.JWT_SECRET,
   options = { algorithm: 'HS256' }
 }: {
@@ -15,6 +16,8 @@ export const signToken = ({
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
   // privateKey = process.env.JWT_SECRET,
   privateKey,
   options = { algorithm: 'HS256' }
@@ -23,11 +26,14 @@ export const signToken = ({
   privateKey: string // bỏ ? để ép truyền vào
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
   options?: jwt.SignOptions
 }) => {
   return new Promise<string>((resolve, reject) => {
@@ -45,6 +51,7 @@ export const verifyToken = ({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   privateKey = process.env.JWT_SECRET as string
 }: {
   token: string
@@ -54,6 +61,8 @@ export const verifyToken = ({
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
   // privateKey = process.env.JWT_SECRET as string
   privateKey
 }: {
@@ -61,11 +70,14 @@ export const verifyToken = ({
   privateKey: string //bỏ ? để ép truyền vào
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> fixJwtTokenStrong
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 }) => {
   //decoded chính là cái payload của mình nha
   //decoded chính là cái payload của mình đc mã hóa

@@ -1,6 +1,7 @@
 import User from '~/models/User.schema'
 import databaseServices from './database.services'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { LoginReqBody, RegisterReqBody } from '~/models/request/User.requests'
 import { hashPassword } from '~/utils/crypto'
 import { signToken } from '~/utils/jwt'
@@ -10,21 +11,31 @@ import { TokenType } from '~/constants/enums'
 import { TokenType, UserVerifyStatus } from '~/constants/enums'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
 import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from '~/models/request/User.requests'
 import { hashPassword } from '~/utils/crypto'
 import { signToken } from '~/utils/jwt'
 import { TokenType, UserVerifyStatus } from '~/constants/enums'
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 import { StringValue } from 'ms'
 import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 import RefreshToken from '~/models/RefreshToken.schema'
 import { ObjectId } from 'mongodb'
+<<<<<<< HEAD
+=======
+import { filter } from 'lodash'
+>>>>>>> uploadfile-refresh_token
 
 class UsersServices {
   private signAccessToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       payload: { user_id, token_type: TokenType.AccessToken }, //0
@@ -44,11 +55,17 @@ class UsersServices {
       payload: { user_id, token_type: TokenType.AccessToken }, //0
       options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
 >>>>>>> reset-password/getme
+=======
+      privateKey: process.env.JWT_SECRET_ACCESS_TOKEN as string, //thêm
+      payload: { user_id, token_type: TokenType.AccessToken }, //0
+      options: { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_IN as StringValue }
+>>>>>>> uploadfile-refresh_token
     })
   }
 
   private signRefreshToken(user_id: string) {
     return signToken({
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       payload: { user_id, token_type: TokenType.RefreshToken }, //0
@@ -61,6 +78,8 @@ class UsersServices {
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
       privateKey: process.env.JWT_SECRET_REFRESH_TOKEN as string, //thêm
       payload: { user_id, token_type: TokenType.RefreshToken }, //1
       options: { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_IN as StringValue }
@@ -81,9 +100,12 @@ class UsersServices {
       payload: { user_id, token_type: TokenType.ForgotPasswordToken }, //1
       options: { expiresIn: process.env.FORGOT_PASSWORD_TOKEN_EXPIRE_IN as StringValue }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     })
   }
 
@@ -92,26 +114,36 @@ class UsersServices {
     // const { email, password } = payload
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     const result = await databaseServices.users.insertOne(
       new User({
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     const user_id = new ObjectId()
     const email_verify_token = await this.signEmailVerifyToken(user_id.toString())
     const result = await databaseServices.users.insertOne(
       new User({
+<<<<<<< HEAD
         _id: user_id,
         email_verify_token,
 <<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+        username: `user${user_id}`, //tạo ra cái id cho nó k bị trùng
+        _id: user_id,
+        email_verify_token,
+>>>>>>> uploadfile-refresh_token
         ...payload,
         date_of_birth: new Date(payload.date_of_birth), //ghi đè
         password: hashPassword(payload.password) //ghi đè lại password bằng password đã đc mã hóa
       })
     )
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     //lấy id của user vừa tạo để làm ac và rf
@@ -123,15 +155,20 @@ class UsersServices {
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 
     //ký ac và rf
     const [access_token, refresh_token] = await Promise.all([
       this.signAccessToken(user_id.toString()),
       this.signRefreshToken(user_id.toString())
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     ])
     //thiếu việc lưu rf vào database
     await databaseServices.refreshTokens.insertOne(
@@ -143,17 +180,23 @@ class UsersServices {
     //
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     //email_verify_token thì phải gửi qua email
     console.log(`http://localhost:3000/users/verify-email/?email_verify_token=${email_verify_token}`)
 
     //
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     return {
       access_token,
       refresh_token
@@ -199,6 +242,10 @@ class UsersServices {
       refresh_token
     }
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> uploadfile-refresh_token
   async checkRefreshToken({ user_id, refresh_token }: { user_id: string; refresh_token: string }) {
     const refreshToken = await databaseServices.refreshTokens.findOne({
       user_id: new ObjectId(user_id),
@@ -219,9 +266,12 @@ class UsersServices {
   }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 
   async checkEmailVerifyToken({
     user_id, //
@@ -317,10 +367,13 @@ class UsersServices {
     )
     //tạo link
 <<<<<<< HEAD
+<<<<<<< HEAD
     console.log(`http://localhost:3000/users/reset-password/?forgot_password_token=${forgot_password_token}`)
   }
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
     console.log(`http://localhost:8000/users/reset-password/?forgot_password_token=${forgot_password_token}`)
   }
 
@@ -424,7 +477,79 @@ class UsersServices {
     )
     return userInfor
   }
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+
+  async changePassword({
+    user_id,
+    old_password, //
+    password
+  }: {
+    user_id: string
+    old_password: string
+    password: string
+  }) {
+    //tìm user dựa trên thông tin cũ nếu có thì mới cập nhật
+    const user = await databaseServices.users.findOne({
+      _id: new ObjectId(user_id),
+      password: hashPassword(old_password)
+    })
+    //nếu ko có thì báo lỗi  luôn
+    if (!user) {
+      throw new ErrorWithStatus({
+        status: HTTP_STATUS.UNPROCESSABLE_ENTITY, //422
+        message: USERS_MESSAGES.USER_NOT_FOUND
+      })
+    }
+    //nếu có thì tiến hành cập nhật password mới cho user
+    await databaseServices.users.updateOne(
+      { _id: new ObjectId(user_id) }, //filter
+      [
+        {
+          $set: {
+            password: hashPassword(password),
+            updated_at: '$$NOW'
+          }
+        }
+      ]
+    )
+    //xong thì thôi
+  }
+
+  async refreshToken({
+    user_id, //
+    refresh_token
+  }: {
+    user_id: string
+    refresh_token: string
+  }) {
+    //xóa refresh_token cũ
+    await databaseServices.refreshTokens.deleteOne({
+      user_id: new ObjectId(user_id), //
+      token: refresh_token //1 user có nhiều refresh token vì nó  có di dộng
+    })
+    //ký 2 mã mới và gửi cho người dùng
+    //ký 2 mã cùng lúc
+    const [access_token, new_refresh_token] = await Promise.all([
+      this.signAccessToken(user_id),
+      this.signRefreshToken(user_id)
+    ])
+    //lưu trữ
+    await databaseServices.refreshTokens.insertOne(
+      new RefreshToken({
+        token: new_refresh_token,
+        user_id: new ObjectId(user_id)
+      })
+    )
+    //
+
+    return {
+      access_token,
+      refresh_token: new_refresh_token //vẫn gửi nhưng refresh của mình là new nha
+    }
+  }
+>>>>>>> uploadfile-refresh_token
 }
 
 const usersServices = new UsersServices()

@@ -21,6 +21,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.21",
@@ -37,6 +38,11 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/lodash": "^4.17.21",
 >>>>>>> reset-password/getme
+=======
+    "@types/formidable": "^3.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/lodash": "^4.17.21",
+>>>>>>> uploadfile-refresh_token
     "@types/node": "^24.10.1",
     "@typescript-eslint/eslint-plugin": "^8.48.0",
     "@typescript-eslint/parser": "^8.48.0",
@@ -47,6 +53,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     "lodash": "^4.17.21",
 >>>>>>> users/logout
@@ -59,6 +66,9 @@
 =======
     "lodash": "^4.17.21",
 >>>>>>> reset-password/getme
+=======
+    "lodash": "^4.17.21",
+>>>>>>> uploadfile-refresh_token
     "nodemon": "^3.1.11",
     "prettier": "^3.6.2",
     "rimraf": "^6.1.2",
@@ -72,6 +82,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "express": "^5.1.0"
 =======
 =======
@@ -80,10 +91,13 @@
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
     "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.3.1",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^6.21.0",
     "ms": "^2.1.3"
@@ -97,5 +111,11 @@
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+    "formidable": "^3.5.4",
+    "jsonwebtoken": "^9.0.3",
+    "mongodb": "^6.21.0",
+    "ms": "^2.1.3"
+>>>>>>> uploadfile-refresh_token
   }
 }

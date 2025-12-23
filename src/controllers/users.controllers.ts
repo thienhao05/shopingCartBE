@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Request, Response } from 'express'
 
 export const loginController = (req: Request, res: Response) => {
@@ -27,22 +28,36 @@ import { LoginReqBody, LogoutReqBody, RegisterReqBody, TokenPayLoad } from '~/mo
 import { NextFunction, Request, Response } from 'express'
 import { validationResult } from 'express-validator'
 import {
+=======
+import { NextFunction, Request, Response } from 'express'
+import { validationResult } from 'express-validator'
+import {
+  ChangePasswordReqBody,
+>>>>>>> uploadfile-refresh_token
   EmailVerifyReqQuery,
   ForgotPasswordReqBody,
   LoginReqBody,
   LogoutReqBody,
+<<<<<<< HEAD
   RegisterReqBody,
 <<<<<<< HEAD
   TokenPayLoad
 } from '~/models/request/User.requests'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+  RefreshTokenReqBody,
+  RegisterReqBody,
+>>>>>>> uploadfile-refresh_token
   ResetPasswordReqBody,
   TokenPayLoad,
   UpdateMeReqBody,
   VerifyForgotPasswordTokenReqBody
 } from '~/models/request/User.requests'
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 import { ParamsDictionary } from 'express-serve-static-core'
 import usersServices from '~/services/users.services'
 import { ErrorWithStatus } from '~/models/Errors'
@@ -50,12 +65,17 @@ import HTTP_STATUS from '~/constants/httpStatus'
 import { USERS_MESSAGES } from '~/constants/messages'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { UserVerifyStatus } from '~/constants/enums'
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 import { UserVerifyStatus } from '~/constants/enums'
 >>>>>>> reset-password/getme
+=======
+import { UserVerifyStatus } from '~/constants/enums'
+import RefreshToken from '~/models/RefreshToken.schema'
+>>>>>>> uploadfile-refresh_token
 
 export const loginController = async (
   req: Request<ParamsDictionary, any, LoginReqBody>, //
@@ -129,12 +149,15 @@ export const logoutController = async (
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
 =======
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
   })
 }
 
@@ -206,8 +229,11 @@ export const forgotPasswordController = async (
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.CHECK_YOUR_EMAIL
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
   })
 }
 
@@ -288,6 +314,49 @@ export const updateMeController = async (
   return res.status(HTTP_STATUS.OK).json({
     message: USERS_MESSAGES.UPDATE_PROFILE_SUCCESS,
     result: userInfor
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
+=======
+  })
+}
+
+export const changePasswordController = async (
+  req: Request<ParamsDictionary, any, ChangePasswordReqBody>, //
+  res: Response
+) => {
+  //đầu tiên mình phải kiểm tra xem password cũ có đúng không đã
+  //mình có kiểm tra access_token ở middleware rồi
+  //nên chắc chắn sẽ có decoded_authorization
+  const { user_id } = req.decoded_authorization as TokenPayLoad
+  const { old_password, password } = req.body
+  //tiến hành đổi mật khẩu
+  await usersServices.changePassword({
+    user_id,
+    old_password,
+    password
+  }) //hàm này chưa code;: kiểm tra old_password đúng không rồi mới đổi password mới
+  //nếu đổi thành công thì
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.CHANGE_PASSWORD_SUCCESS
+  })
+}
+
+export const refreshTokenController = async (
+  req: Request<ParamsDictionary, any, RefreshTokenReqBody>, //
+  res: Response
+) => {
+  //kiểm tra xem refresh_token còn tồn tại trong hệ thống không
+  const { user_id } = req.decoded_refresh_token as TokenPayLoad
+  const { refresh_token } = req.body
+  await usersServices.checkRefreshToken({ user_id, refresh_token })
+  //kiểm tra xong thì tiến hành tạo ra ac và rf mới và gửi cho client
+  const result = await usersServices.refreshToken({
+    user_id,
+    refresh_token
+  }) //hàm phải trả ra ac và rf mới
+  return res.status(HTTP_STATUS.OK).json({
+    message: USERS_MESSAGES.REFRESH_TOKEN_SUCCESS,
+    result
+>>>>>>> uploadfile-refresh_token
   })
 }

@@ -6,6 +6,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "exec": "npx ts-node ./src/index.ts"
 =======
   "exec": "npx ts-node -T ./src/index.ts"
@@ -19,4 +20,7 @@
 =======
   "exec": "npx ts-node -T ./src/index.ts"
 >>>>>>> reset-password/getme
+=======
+  "exec": "npx ts-node -T ./src/index.ts"
+>>>>>>> uploadfile-refresh_token
 }

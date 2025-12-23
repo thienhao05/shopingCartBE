@@ -3,6 +3,7 @@ import express from 'express'
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { loginController } from '~/controllers/users.controllers'
 import { loginValidator } from '~/middlewares/users.middlewares'
 =======
@@ -21,16 +22,25 @@ import {
   resendVerifyEmailController
 =======
 import {
+=======
+import {
+  changePasswordController,
+>>>>>>> uploadfile-refresh_token
   emailVerifyController,
   forgotPasswordController,
   getMeController,
   loginController,
   logoutController,
+<<<<<<< HEAD
+=======
+  refreshTokenController,
+>>>>>>> uploadfile-refresh_token
   registerController,
   resendVerifyEmailController,
   resetPasswordController,
   updateMeController,
   verifyForgotPasswordController
+<<<<<<< HEAD
 >>>>>>> reset-password/getme
 } from '~/controllers/users.controllers'
 import {
@@ -52,6 +62,14 @@ import { wrapAsync } from '~/utils/handler'
 =======
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+} from '~/controllers/users.controllers'
+import { filterMiddleware } from '~/middlewares/common.middlewares'
+import {
+  accessTokenValidator,
+  changePasswordValidator,
+  emailVerifyTokenValidator,
+>>>>>>> uploadfile-refresh_token
   forgotPasswordTokenValidator,
   forgotPasswordValidator,
   loginValidator,
@@ -60,13 +78,19 @@ import { wrapAsync } from '~/utils/handler'
   resetPasswordValidator,
   updateMeValidator
 } from '~/middlewares/users.middlewares'
+<<<<<<< HEAD
 import { wrapAsync } from '~/utils/handler'
 >>>>>>> reset-password/getme
+=======
+import { ChangePasswordReqBody, UpdateMeReqBody } from '~/models/request/User.requests'
+import { wrapAsync } from '~/utils/handler'
+>>>>>>> uploadfile-refresh_token
 const usersRoutes = express.Router()
 
 /*
 path: users/login
 method: POST
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -81,12 +105,15 @@ Request: headers body param query
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 Request: headers(gửi những cái mật khẩu mà server cho mình) 
          body(những mật khẩu của mình muốn gửi lên server)
          param(méo quan trọng)
          query(méo quan trọng)
     headers: do server gui cho minh minh gui lai(người ta cho mình cái mật khẩu cái mình giữ mình gửi lên lại)
     body: minh gui len server (cái gì của mình, mình gửi lên server)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -97,10 +124,13 @@ Request: headers(gửi những cái mật khẩu mà server cho mình)
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 body: {
     email: string,
     password: string
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -117,6 +147,8 @@ usersRoutes.post('/login', loginValidator, loginController)
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
 >>>>>>> reset-password/getme
+=======
+>>>>>>> uploadfile-refresh_token
 loginValidator: kiem tra email va password (middleware)
 loginController: dong goi kien va gui ket qua
 */
@@ -165,6 +197,7 @@ usersRoutes.post(
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> users/logout
 =======
 >>>>>>> fixJwtTokenStrong
@@ -175,6 +208,12 @@ usersRoutes.post(
 /*verify-email
 des: người dùng vào email để bấm vào link xác thực, link này thật chất
 là gửi lại email_verify_toke lên server để server xác thực
+=======
+
+/*verify-email
+des: người dùng vào email để bấm vào link xác thực, link này thật chất
+là gửi lại email_verify_token lên server để server xác thực
+>>>>>>> uploadfile-refresh_token
 path: /users/verify-email/?email_verify_token=string
 method: GET (vì người dùng chỉ bấm vào link)
 query:{
@@ -217,8 +256,11 @@ usersRoutes.post(
   wrapAsync(forgotPasswordController)
 )
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> origin/update-verifyEmail-resendVerifyEmail-forgotPassword
 =======
+=======
+>>>>>>> uploadfile-refresh_token
 
 /*verify-forgot-password
 des: khi người dùng vào mail click vào link để verify, họ sẽ gửi 
@@ -271,7 +313,11 @@ usersRoutes.post(
   wrapAsync(getMeController)
 )
 
+<<<<<<< HEAD
 /*
+=======
+/*updateMe
+>>>>>>> uploadfile-refresh_token
 des: update profile của user
 path: '/me'
 method: patch
@@ -291,9 +337,63 @@ usersRoutes.patch(
   '/me', //
   accessTokenValidator,
   updateMeValidator,
+<<<<<<< HEAD
   wrapAsync(updateMeController)
 )
 //test lại nha
 >>>>>>> reset-password/getme
+=======
+  filterMiddleware<UpdateMeReqBody>([
+    'avatar',
+    'bio',
+    'cover_photo',
+    'date_of_birth',
+    'location',
+    'name',
+    'username',
+    'website'
+  ]),
+  wrapAsync(updateMeController)
+)
+//test lại nha
+
+/*change-password
+des: khi người dùng đã 'đăng nhập' muốn đổi mật khẩu
+path: /users/change-password
+method: PUT
+headers{
+  Authorization: 'Bearer access_token'
+}
+body: {
+  old_password: string,
+  password: string,
+  confirm_password: string
+}
+*/
+
+usersRoutes.put(
+  '/change-password', //
+  accessTokenValidator, //có rồi không làm nữa
+  changePasswordValidator, //kiểm tra old_password, password, confirm_password
+  // filterMiddleware<ChangePasswordReqBody>([]),
+  wrapAsync(changePasswordController)
+)
+
+/*RefreshToken
+des: khi mã acess_token hết hạn thì client sẽ gửi refresh_token lên để xin 
+access_token và refresh_token mới
+path: 'users/refresh-token'
+method: POST
+body: {
+  refresh_token: string
+}
+*/
+
+usersRoutes.post(
+  '/refresh-token', //
+  refreshTokenValidator, //mình đã làm hàm verify refresh_token gòi
+  wrapAsync(refreshTokenController)
+)
+>>>>>>> uploadfile-refresh_token
 
 export default usersRoutes
